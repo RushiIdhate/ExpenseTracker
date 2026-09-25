@@ -34,12 +34,6 @@ export async function createExpense(req: Request, res: Response): Promise<void> 
     return;
   }
 
-  const now = new Date();
-  if (expenseDate < budget.startDate || expenseDate > now) {
-    res.status(400).json({ message: 'Expense date must be within the active budget cycle and cannot be in the future.' });
-    return;
-  }
-
   const remaining = category.budget - category.spent;
   if (amount > remaining + 0.005) {
     res.status(400).json({ message: `Expense exceeds the remaining ${category.name} budget of ₹${remaining.toFixed(2)}.` });
